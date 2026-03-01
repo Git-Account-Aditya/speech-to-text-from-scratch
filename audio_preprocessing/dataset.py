@@ -3,7 +3,6 @@ import torch
 import soundfile as sf
 import io
 
-
 class SpeechDataset:
     def __init__(
         self,

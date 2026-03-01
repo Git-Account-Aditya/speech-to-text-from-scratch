@@ -10,7 +10,7 @@ class DownSamplerBlock(nn.Module):
         self.bn = nn.BatchNorm1d(out_channels)
         self.relu = nn.ReLU()
 
-        # Residual projection: match both channel dims and time downsampling
+        # Residual connection
         self.residual = nn.Conv1d(in_channels, out_channels, kernel_size=1, stride=stride)
 
     def forward(self, x):
@@ -27,7 +27,7 @@ class DownSamplingNetwork(nn.Module):
         hidden_dims: int = 64, 
         in_channel: int = 1,
         initial_mean_pooling_kernel_size: int = 2,
-        strides: list[int] = [4, 4, 6, 6]
+        strides = [4, 4, 6, 6]
     ):
         super().__init__()
         self.layers = nn.ModuleList()

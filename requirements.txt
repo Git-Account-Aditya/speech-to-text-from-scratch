@@ -1,1 +1,8 @@
-torchcodec
+torch>=2.0.0
+numpy>=1.24.0
+pandas>=2.0.0
+soundfile>=0.12.0
+tokenizers>=0.15.0
+matplotlib>=3.7.0
+huggingface_hub>=0.20.0
+datasets>=4.5.0

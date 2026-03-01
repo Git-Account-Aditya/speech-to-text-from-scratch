@@ -1,6 +1,7 @@
-from downsampler import DownSamplingNetwork, DownSamplerBlock
-from transformer_with_attn import SinusoidalPositionalEncoding, TransformerEncoderBlock
+from .downsampler import DownSamplingNetwork, DownSamplerBlock
+from .transformer_with_attn import SinusoidalPositionalEncoding, TransformerEncoderBlock
 
+import torch
 import torch.nn as nn 
 
 class AcousticEncoder(nn.Module):
@@ -17,6 +18,7 @@ class AcousticEncoder(nn.Module):
         
         # create downsampler using convolutional layers
         self.downsampling_network = DownSamplingNetwork(
+            embedding_dims=d_model,
             hidden_dims=d_model,
             in_channel=n_mels,
             strides=strides
@@ -49,11 +51,8 @@ class AcousticEncoder(nn.Module):
         if x.dim() != 3:
             raise ValueError(f"Expected input tensor of dim 3, got {x.dim()}")
 
-        # Call modules directly instead of .forward(...)
         x = self.downsampling_network(x)
         x = self.sinusoidal_positional_encoding(x)
-
         for layer in self.layers:
             x = layer(x)
-
         return x

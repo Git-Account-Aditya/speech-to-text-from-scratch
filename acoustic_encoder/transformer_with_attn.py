@@ -11,10 +11,9 @@ class SinusoidalPositionalEncoding(nn.Module):
                              (-torch.log(torch.tensor(10000.0)) / d_model))
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
-        self.register_buffer('pe', pe.unsqueeze(0))  # [1, max_len, d_model]
+        self.register_buffer('pe', pe.unsqueeze(0)) 
     
     def forward(self, x):
-        # x: [batch, T, d_model]
         return x + self.pe[:, :x.size(1)]
 
 class TransformerEncoderBlock(nn.Module):
@@ -31,10 +30,9 @@ class TransformerEncoderBlock(nn.Module):
         self.dropout = nn.Dropout(dropout)
     
     def forward(self, x):
-        # Pre-norm style (used by Whisper — more stable than post-norm)
         attn_out, _ = self.attn(self.norm1(x), self.norm1(x), self.norm1(x))
-        x = x + self.dropout(attn_out)          # residual
+        x = x + self.dropout(attn_out) 
         
         ff_out = self.ff(self.norm2(x))
-        x = x + self.dropout(ff_out)            # residual
+        x = x + self.dropout(ff_out)          
         return x

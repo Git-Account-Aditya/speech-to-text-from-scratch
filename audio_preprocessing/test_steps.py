@@ -10,7 +10,6 @@ import pandas as pd
 
 if __name__ == "__main__":
     try:
-        # Download the parquet file directly — completely bypasses torchcodec/FFmpeg
         print("Downloading dataset...")
         parquet_path = hf_hub_download(
             repo_id="m-aliabbas/idrak_timit_subsample1",
